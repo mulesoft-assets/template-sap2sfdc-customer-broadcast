@@ -10,23 +10,19 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.junit.Rule;
 import org.mule.api.config.MuleProperties;
 import org.mule.tck.junit4.FunctionalTestCase;
-import org.mule.tck.junit4.rule.DynamicPort;
 
 /**
  * This is the base test class for Anypoint Templates integration tests.
  * 
  * @author damiansima
  */
-public class AbstractTemplateTestCase extends FunctionalTestCase {
+public abstract class AbstractTemplateTestCase extends FunctionalTestCase {
 	private static final String MAPPINGS_FOLDER_PATH = "./mappings";
 	private static final String TEST_FLOWS_FOLDER_PATH = "./src/test/resources/flows/";
 	private static final String MULE_DEPLOY_PROPERTIES_PATH = "./src/main/app/mule-deploy.properties";

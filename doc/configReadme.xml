@@ -1,11 +1,20 @@
 <?xml version="1.0"?>
 <configuration>
 	<placeholders>
-		<placeholder id="template_name">SAP2SFDC-product-broadcast</placeholder>
+		<placeholder id="template_name">SAP2SFDC-account-broadcast</placeholder>
 	</placeholders>
 	<sections>
 		<section id="use_case">
-			WE NEED A NICE GUY WHO WRITE THIS FOR US!!!!
+			This Anypoint Template should serve as a foundation for setting an online sync of accounts from SAP to Salesforce.
+			Everytime there is a new account (SAP customer) or a change in already existing one, the SAP will send IDoc with it to running template which will update account in Salesforce target instance.
+			
+			Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
+			
+			As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
+			The batch job is divided in Input, Process and On Complete stages.
+			The integration is triggered by SAP Endpoint that receives Account (SAP Customer) as IDoc XML. This XML is passed to the batch.
+			In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+			Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 		</section>
 		<section id="considerations">
 <![CDATA[
@@ -25,7 +34,7 @@ RFC SDK is used to register program ID on gateway. Same program ID name is used 
 Partner port needs to be defined type of Idoc of SAP release 4.x as its version. As RFC destination same RFC destination created earlier is used.
 
 4. Partner profile
-Partner profile needs to be customized type of logical system as partner type. Outbound parameter of message type MATMAS is defined in the partner profile. As receiver port an RFC destination created earlier is used. Idoc Type MATMAS01 is defined.
+Partner profile needs to be customized type of logical system as partner type. Outbound parameter of message type DEBMAS is defined in the partner profile. As receiver port an RFC destination created earlier is used. Idoc Type DEBMAS01 is defined.
 
 
 ### SFDC Pre Conditions
@@ -36,7 +45,7 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
 
-You will need to create a new custom field in your **Product** entity in SFDC with the following name: 
+You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
 + `sap_external_id`
 
@@ -83,14 +92,14 @@ Please check this Documentation Page:
 		<![CDATA[
 SalesForce imposes limits on the number of API Calls that can be made.
 Therefore calculating this amount may be an important factor to
-consider. Product Broadcast Template calls to the API can be
+consider. Account Broadcast Template calls to the API can be
 calculated using the formula:
 
 **X / 200**
 
-Being X the number of Products to be synchronized on each run.
+Being X the number of Accounts to be synchronized on each run.
 
-The division by 200 is because, by default, Users are gathered in groups
+The division by 200 is because, by default, Customers are gathered in groups
 of 200 for each Upsert API Call in the commit step. Also consider
 that this calls are executed repeatedly every polling cycle.
 

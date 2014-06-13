@@ -1,5 +1,5 @@
 
-# Anypoint Template: SAP2SFDC-product-broadcast
+# Anypoint Template: SAP2SFDC-account-broadcast
 
 + [License Agreement](#licenseagreement)
 + [Use Case](#usecase)
@@ -24,7 +24,16 @@ Note that using this template is subject to the conditions of this [License Agre
 Please review the terms of the license before downloading and using this template. In short, you are allowed to use the template for free with Mule ESB Enterprise Edition, CloudHub, or as a trial in Anypoint Studio.
 
 # Use Case <a name="usecase"/>
-WE NEED A NICE GUY WHO WRITE THIS FOR US!!!!
+This Anypoint Template should serve as a foundation for setting an online sync of accounts from SAP to Salesforce.
+			Everytime there is a new account (SAP customer) or a change in already existing one, the SAP will send IDoc with it to running template which will update account in Salesforce target instance.
+			
+			Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
+			
+			As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
+			The batch job is divided in Input, Process and On Complete stages.
+			The integration is triggered by SAP Endpoint that receives Account (SAP Customer) as IDoc XML. This XML is passed to the batch.
+			In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+			Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 
 # Considerations <a name="considerations"/>
 
@@ -45,7 +54,7 @@ RFC SDK is used to register program ID on gateway. Same program ID name is used 
 Partner port needs to be defined type of Idoc of SAP release 4.x as its version. As RFC destination same RFC destination created earlier is used.
 
 4. Partner profile
-Partner profile needs to be customized type of logical system as partner type. Outbound parameter of message type MATMAS is defined in the partner profile. As receiver port an RFC destination created earlier is used. Idoc Type MATMAS01 is defined.
+Partner profile needs to be customized type of logical system as partner type. Outbound parameter of message type DEBMAS is defined in the partner profile. As receiver port an RFC destination created earlier is used. Idoc Type DEBMAS01 is defined.
 
 
 ### SFDC Pre Conditions
@@ -56,7 +65,7 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
 
-You will need to create a new custom field in your **Product** entity in SFDC with the following name: 
+You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
 + `sap_external_id`
 
@@ -65,15 +74,13 @@ For instructions on how to create a custom field in SFDC plase check this link:
 + [Create Custom Fields](http://www.salesforce.com/smallbusinesscenter/faq/customize.jsp#customfield)
 
 # Run it! <a name="runit"/>
-Simple steps to get $template_name running
+Simple steps to get SAP2SFDC-account-broadcast running
 
 In any of the ways you would like to run this Anypoint Template, here is an example of the output you'll see after hitting the HTTP endpoints.
 
 
-
 ## Running on premise <a name="runonopremise"/>
 In this section we detail the way you have to run you Anypoint Temple on you computer.
-
 
 
 ### Where to Download Mule Studio and Mule ESB
@@ -81,7 +88,6 @@ First thing to know if you are a newcomer to Mule is where to get the tools.
 
 + You can download Mule Studio from this [Location](http://www.mulesoft.com/platform/mule-studio)
 + You can download Mule ESB from this [Location](http://www.mulesoft.com/platform/soa/mule-esb-open-source-esb)
-
 
 
 ### Importing an Anypoint Template into Studio
@@ -95,7 +101,6 @@ Mule Studio offers several ways to import a project into the workspace, for inst
 You can find a detailed description on how to do so in this [Documentation Page](http://www.mulesoft.org/documentation/display/current/Importing+and+Exporting+in+Studio).
 
 
-
 ### Running on Studio <a name="runonstudio"/>
 Once you have imported you Anypoint Template into Anypoint Studio you need to follow these steps to run it:
 
@@ -104,30 +109,25 @@ Once you have imported you Anypoint Template into Anypoint Studio you need to fo
 + Once that is done, right click on you Anypoint Template project folder 
 + Hover you mouse over `"Run as"`
 + Click on  `"Mule Application"`
-
 In order to make this Anypoint Template run on Mule Studio there are a few extra steps that needs to be made.
 Please check this Documentation Page:
 
 + [Enabling Your Studio Project for SAP](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP)
 
 ### Running on Mule ESB stand alone <a name="runonmuleesbstandalone"/>
-Complete all properties in one of the property files, for example in [mule.prod.properties] (../blob/master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`.
- 
+Complete all properties in one of the property files, for example in [mule.prod.properties] (../blob/master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`. 
 
 
 ## Running on CloudHub <a name="runoncloudhub"/>
-While [creating your application on CloudHub](http://www.mulesoft.org/documentation/display/current/Hello+World+on+CloudHub) (Or you can do it later as a next step), you need to go to Deployment > Advanced to set all environment variables detailed in **Properties to be configured** as well as the **mule.env**. 
-
+While [creating your application on CloudHub](http://www.mulesoft.org/documentation/display/current/Hello+World+on+CloudHub) (Or you can do it later as a next step), you need to go to Deployment > Advanced to set all environment variables detailed in **Properties to be configured** as well as the **mule.env**.
 
 
 ### Deploying your Anypoint Template on CloudHub <a name="deployingyouranypointtemplateoncloudhub"/>
 Mule Studio provides you with really easy way to deploy your Template directly to CloudHub, for the specific steps to do so please check this [link](http://www.mulesoft.org/documentation/display/current/Deploying+Mule+Applications#DeployingMuleApplications-DeploytoCloudHub)
 
 
-
 ## Properties to be configured (With examples) <a name="propertiestobeconfigured"/>
 In order to use this Mule Anypoint Template you need to configure properties (Credentials, configurations, etc.) either in properties file or in CloudHub as Environment Variables. Detail list with examples:
-
 ### Application configuration
 **SAP Connector configuration**
 
@@ -155,14 +155,14 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 # API Calls <a name="apicalls"/>
 SalesForce imposes limits on the number of API Calls that can be made.
 Therefore calculating this amount may be an important factor to
-consider. Product Broadcast Template calls to the API can be
+consider. Account Broadcast Template calls to the API can be
 calculated using the formula:
 
 **X / 200**
 
-Being X the number of Products to be synchronized on each run.
+Being X the number of Accounts to be synchronized on each run.
 
-The division by 200 is because, by default, Users are gathered in groups
+The division by 200 is because, by default, Customers are gathered in groups
 of 200 for each Upsert API Call in the commit step. Also consider
 that this calls are executed repeatedly every polling cycle.
 
@@ -183,11 +183,11 @@ Here is a list of the main XML files you'll find in this application:
 * [errorHandling.xml](#errorhandlingxml)
 
 
-
 ## config.xml<a name="configxml"/>
 Configuration for Connectors and [Properties Place Holders](http://www.mulesoft.org/documentation/display/current/Configuring+Properties) are set in this file. **Even you can change the configuration here, all parameters that can be modified here are in properties file, and this is the recommended place to do it so.** Of course if you want to do core changes to the logic you will probably need to modify this file.
 
 In the visual editor they can be found on the *Global Element* tab.
+
 
 ## businessLogic.xml<a name="businesslogicxml"/>
 Functional aspect of the Anypoint Template is implemented on this XML, directed by a batch job that will be responsible for creations/updates. The severeal message processors constitute four high level actions that fully implement the logic of this Anypoint Template:
@@ -197,9 +197,15 @@ Functional aspect of the Anypoint Template is implemented on this XML, directed 
 3. The last step of the Process stage will group the users and create/update them in SFDC Org B.
 Finally during the On Complete stage the Anypoint Template will logoutput statistics data into the console.
 
+
+
 ## endpoints.xml<a name="endpointsxml"/>
 This is file is conformed by a Flow containing the Poll that will periodically query Sales Force for updated/created Contacts that meet the defined criteria in the query. And then executing the batch job process with the query results.
 
+
+
 ## errorHandling.xml<a name="errorhandlingxml"/>
 Contains a [Catch Exception Strategy](http://www.mulesoft.org/documentation/display/current/Catch+Exception+Strategy) that is only Logging the exception thrown (If so). As you imagine, this is the right place to handle how your integration will react depending on the different exceptions.
+
+
 
