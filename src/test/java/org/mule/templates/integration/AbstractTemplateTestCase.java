@@ -1,10 +1,21 @@
+/**
+ * Mule Anypoint Template
+ *
+ * Copyright (c) MuleSoft, Inc.  All rights reserved.  http://www.mulesoft.com
+ */
+
 package org.mule.templates.integration;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.Rule;
 import org.mule.api.config.MuleProperties;
 import org.mule.tck.junit4.FunctionalTestCase;
@@ -20,64 +31,58 @@ public class AbstractTemplateTestCase extends FunctionalTestCase {
 	private static final String TEST_FLOWS_FOLDER_PATH = "./src/test/resources/flows/";
 	private static final String MULE_DEPLOY_PROPERTIES_PATH = "./src/main/app/mule-deploy.properties";
 
-	protected static final String TEMPLATE_NAME = "opportunity-aggregation";
-
-	@Rule
-	public DynamicPort port = new DynamicPort("http.port");
+	protected static final String TEMPLATE_NAME = "sap2sfdc-account-broadcast";
 
 	@Override
 	protected String getConfigResources() {
-		String resources = "";
 		try {
 			Properties props = new Properties();
 			props.load(new FileInputStream(MULE_DEPLOY_PROPERTIES_PATH));
-			resources = props.getProperty("config.resources");
-		} catch (Exception e) {
-			throw new IllegalStateException(
-					"Could not find mule-deploy.properties file on classpath. Please add any of those files or override the getConfigResources() method to provide the resources by your own.");
+			return props.getProperty("config.resources") + getTestFlows();
+		} catch (IOException e) {
+			throw new IllegalStateException("Could not find mule-deploy.properties file on classpath. "
+					+ "Please add any of those files or override the getConfigResources() method to provide the resources by your own.");
 		}
 
-		return resources + getTestFlows();
 	}
 
 	protected String getTestFlows() {
-		StringBuilder resources = new StringBuilder();
-
 		File testFlowsFolder = new File(TEST_FLOWS_FOLDER_PATH);
-		File[] listOfFiles = testFlowsFolder.listFiles();
-		if (listOfFiles != null) {
-			for (File f : listOfFiles) {
-				if (f.isFile() && f.getName().endsWith("xml")) {
-					resources.append(",").append(TEST_FLOWS_FOLDER_PATH).append(f.getName());
-				}
+		File[] listOfFiles = testFlowsFolder.listFiles(new FileFilter() {
+			@Override
+			public boolean accept(File f) {
+				return f.isFile() && f.getName().endsWith("xml");
 			}
-			return resources.toString();
-		} else {
+		});
+		
+		if (listOfFiles == null) {
 			return "";
 		}
+		
+		StringBuilder resources = new StringBuilder();
+		for (File f : listOfFiles) {
+			resources.append(",").append(TEST_FLOWS_FOLDER_PATH).append(f.getName());
+		}
+		return resources.toString();
 	}
 
 	@Override
 	protected Properties getStartUpProperties() {
 		Properties properties = new Properties(super.getStartUpProperties());
-
-		String pathToResource = MAPPINGS_FOLDER_PATH;
-		File graphFile = new File(pathToResource);
-
-		properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, graphFile.getAbsolutePath());
-
+		properties.put(MuleProperties.APP_HOME_DIRECTORY_PROPERTY, new File(MAPPINGS_FOLDER_PATH).getAbsolutePath());
 		return properties;
 	}
 
 	protected String buildUniqueName(String templateName, String name) {
-		String timeStamp = new Long(new Date().getTime()).toString();
-
-		StringBuilder builder = new StringBuilder();
-		builder.append(name);
-		builder.append(templateName);
-		builder.append(timeStamp);
-
-		return builder.toString();
+		return new StringBuilder()
+				.append(name)
+				.append(templateName)
+				.append(new Long(new Date().getTime()).toString())
+				.toString();
+	}
+	
+	protected static String getFileString(String filePath) throws IOException {
+		return FileUtils.readFileToString(new File(filePath));
 	}
 
 }

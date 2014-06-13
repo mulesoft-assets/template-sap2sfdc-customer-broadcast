@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:spring="http://www.springframework.org/schema/beans" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" xmlns:synchronize="http://www.mulesoft.org/schema/mule/synchronize" xmlns:core="http://www.mulesoft.org/schema/mule/core" version="EE-3.5.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+    <flow name="callBatchFlow" doc:name="callBatchFlow">
+        <logger message="++++++ BEFORE CALL BATCH" level="ERROR" doc:name="Logger"/>
+        <synchronize:run-and-wait timeout="60000" doc:name="Synchronize">  
+            <batch:execute xmlns:batch="http://www.mulesoft.org/schema/mule/batch" name="businessLogicBatch1" doc:name="Batch Execute"></batch:execute> 
+        </synchronize:run-and-wait>
+        <logger message="++++++ AFTER CALL BATCH" level="ERROR" doc:name="Logger"/>
+    </flow>
+    <sub-flow name="retrieveProductFromSFDCFlow" doc:name="retrieveProductFromSFDCFlow">
+        <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM Product2  WHERE sap_external_id__c = '#[payload['sap_external_id__c']]'" doc:name="Salesforce"/>
+        <logger message="Retrieve Contacts result: #[payload]" level="INFO" doc:name="Logger"/>
+    </sub-flow>
+    <sub-flow name="deleteProductFromSFDCFlow" doc:name="deleteProductFromSFDCFlow">
+        <sfdc:delete config-ref="Salesforce" doc:name="Salesforce">
+            <sfdc:ids ref="#[payload]"/>
+        </sfdc:delete>
+        <logger message="Remove Contacts from A result: #[payload]" level="INFO" doc:name="Logger"/>
+    </sub-flow>
+</mule>

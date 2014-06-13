@@ -30,7 +30,6 @@ http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/ba
                     <sfdc:upsert config-ref="Salesforce" externalIdFieldName="sap_external_id__c" type="Account" doc:name="upsert Accounts in Salesforce">
                         <sfdc:objects ref="#[payload]"/>
                     </sfdc:upsert>
-                    <logger message="#[payload]" level="INFO" category="TEST1" doc:name="Logger"/>
                 </batch:commit>
             </batch:step>
         </batch:process-records>

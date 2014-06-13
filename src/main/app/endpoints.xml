@@ -25,7 +25,6 @@ Here you should not:
 		<sap:inbound-endpoint type="idoc" rfcType="qrfc" xmlVersion="2" responseTimeout="10000" doc:name="SAP" jcoConnectionCount="${sap.jco.connectioncount}" jcoGwHost="${sap.jco.gwhost}" jcoGwService="${sap.jco.gwservice}" jcoProgramId="${sap.jco.idoc.programid}" outputXml="true" connector-ref="SAP" functionName="DEBMAS01">
 	    	<sap:default-in-memory-tid-store/>
 		</sap:inbound-endpoint>
-        <logger message="#[payload]" level="INFO" category="SAPIK" doc:name="Logger"/>
 		
 		<batch:execute name="businessLogicBatch" doc:name="trigger businessLogicBatch"/>      
     </flow>

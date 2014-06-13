@@ -546,6 +546,13 @@
 <Field __artificialType="_id" __systemManaged="true" name="__id" type="string"/>
 <Field __index="0" __sourcePath="{}/SFDC_x0020Accounts/Name" containerType="SINGLE" label="Name" name="Name" type="string"/>
 <Field __sourcePath="{}/SFDC_x0020Accounts/sap_external_id__c" containerType="SINGLE" label="sap_external_id__c" name="sap_external_id__c" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/BillingCity" containerType="SINGLE" label="BillingCity" name="Billing_City" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/BillingCountry" containerType="SINGLE" label="BillingCountry" name="BillingCountry" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/BillingPostalCode" containerType="SINGLE" label="BillingPostalCode" name="BillingPostalCode" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/BillingState" containerType="SINGLE" label="BillingState" name="BillingState" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/BillingStreet" containerType="SINGLE" label="BillingStreet" name="BillingStreet" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/Phone" containerType="SINGLE" label="Phone" name="Phone" type="string"/>
+<Field __sourcePath="{}/SFDC_x0020Accounts/Fax" containerType="SINGLE" label="Fax" name="Fax" type="string"/>
 </Record>
 </Metadata>
 <Dictionary>
@@ -560,7 +567,14 @@
 output.__id = input.__id;
 //END -> DO NOT REMOVE
 output.Name = input.NAME1;
-output.sap_external_id__c = input.KUNNR;]]></attr>
+output.sap_external_id__c = input.KUNNR;
+output.Billing_City = input.ORT01;
+output.BillingState = input.REGIO;
+output.BillingPostalCode = input.PSTLZ;
+output.BillingCountry = input.LAND1;
+output.BillingStreet = input.STRAS;
+output.Phone = input.TELF1;
+output.Fax = input.TELFX;]]></attr>
 </Node>
 <Node cacheInMemory="true" enabled="enabled" fileURL="dict:outputPayload" guiName="Map&lt;k,v&gt; WRITER" guiX="900" guiY="20" id="MAP_WRITER0" type="MAP_WRITER">
 <attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
@@ -568,6 +582,13 @@ output.sap_external_id__c = input.KUNNR;]]></attr>
   <item clover:inPort="0">
     <Name>$0.Name</Name>
     <clover:element clover:name="sap_external_id__c">$0.sap_external_id__c</clover:element>
+    <BillingCity>$0.Billing_City</BillingCity>
+    <BillingCountry>$0.BillingCountry</BillingCountry>
+    <BillingPostalCode>$0.BillingPostalCode</BillingPostalCode>
+    <BillingState>$0.BillingState</BillingState>
+    <BillingStreet>$0.BillingStreet</BillingStreet>
+    <Phone>$0.Phone</Phone>
+    <Fax>$0.Fax</Fax>
   </item>
 </clover:collection>]]></attr>
 <attr name="_data_format"><![CDATA[MAP]]></attr>
