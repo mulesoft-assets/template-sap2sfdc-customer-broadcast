@@ -42,37 +42,16 @@ This Anypoint Template should serve as a foundation for setting an online sync o
 To make this Anypoint Template run, there are certain preconditions that must be considered. All of them deal with the preparations in both source (SAP) and destination (SFDC) systems, that must be made in order for all to run smoothly. 
 **Failling to do so could lead to unexpected behavior of the template.**
 
-### SAP Pre Conditions
-There are a few things that needs to be done in SAP in order for this template to work. 
+Before continue with the use of this Anypoint Template, you may want to check out this [Documentation Page](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP), that will teach you how to work 
+with SAP and Anypoint Studio-
 
-1. RFC destination
-RFC destination of type "TCP/IP Connection" pointing to program ID on gateway needs to be created. The destination uses Unicode communication type with target system.
+## Disclaimer
 
-2. Program ID registration
-RFC SDK is used to register program ID on gateway. Same program ID name is used here as in the RFC destination.
+This Anypoint template uses a few private Maven dependencies in oder to work. If you intend to run this template with Maven support, please continue reading.
 
-3. Partner port
-Partner port needs to be defined type of Idoc of SAP release 4.x as its version. As RFC destination same RFC destination created earlier is used.
-
-4. Partner profile
-Partner profile needs to be customized type of logical system as partner type. Outbound parameter of message type DEBMAS is defined in the partner profile. As receiver port an RFC destination created earlier is used. Idoc Type DEBMAS01 is defined.
-
-
-### SFDC Pre Conditions
-
-This template makes use of the `External ID` field offered by Salesforce. Here is a short description on how SFDC define external ID's 
-
-+ [What is an external ID?](http://help.salesforce.com/apex/HTViewHelpDoc?id=faq_import_general_what_is_an_external.htm)
-
-The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
-
-You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
-
-+ `sap_external_id`
-
-For instructions on how to create a custom field in SFDC plase check this link:
-
-+ [Create Custom Fields](http://www.salesforce.com/smallbusinesscenter/faq/customize.jsp#customfield)
+You will find that there are three dependencies in the pom.xml file that begin with the following group id: 
+	**com.sap.conn.jco** 
+These dependencies are private for Mulesoft and will cause you application not to build from a Maven command line. You need to replace them with "provided" scope and copy the libraries into the build path.
 
 
 ## SAP Considerations <a name="sapconsiderations"/>
@@ -117,7 +96,19 @@ In order to have this template working as expected, you should be aware of your 
 
 ### As destination of data
 
-There are no particular considerations for this Anypoint Template regarding Siebel as data destination.
+This template makes use of the `External ID` field offered by Salesforce. Here is a short description on how SFDC define external ID's 
+
++ [What is an external ID?](http://help.salesforce.com/apex/HTViewHelpDoc?id=faq_import_general_what_is_an_external.htm)
+
+The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
+
+You will need to create a new custom field in your **Product** entity in SFDC with the following name: 
+
++ `sap_external_id`
+
+For instructions on how to create a custom field in SFDC plase check this link:
+
++ [Create Custom Fields](http://www.salesforce.com/smallbusinesscenter/faq/customize.jsp#customfield)
 
 
 
