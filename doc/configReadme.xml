@@ -41,7 +41,7 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
 
-You will need to create a new custom field in your **Product** entity in SFDC with the following name: 
+You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
 + `sap_external_id`
 

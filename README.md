@@ -43,7 +43,7 @@ To make this Anypoint Template run, there are certain preconditions that must be
 **Failling to do so could lead to unexpected behavior of the template.**
 
 Before continue with the use of this Anypoint Template, you may want to check out this [Documentation Page](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP), that will teach you how to work 
-with SAP and Anypoint Studio-
+with SAP and Anypoint Studio.
 
 ## Disclaimer
 
