@@ -9,12 +9,10 @@ package org.mule.templates.unit;
 import static org.mule.modules.interceptor.matchers.Matchers.contains;
 import static org.mule.munit.common.mocking.Attribute.attribute;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.Properties;
 
 import org.apache.commons.io.IOUtils;
