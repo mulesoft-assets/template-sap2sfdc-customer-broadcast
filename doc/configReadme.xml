@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <configuration>
 	<placeholders>
-		<placeholder id="template_name">SAP2SFDC-account-broadcast</placeholder>
+		<placeholder id="template_name">SAP2SFDC-customer-broadcast</placeholder>
 	</placeholders>
 	<sections>
 		<section id="use_case">
-			This Anypoint Template should serve as a foundation for setting an online sync of accounts from SAP to Salesforce.
-			Everytime there is a new account (SAP customer) or a change in already existing one, the SAP will send IDoc with it to running template which will update account in Salesforce target instance.
-			
-			Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
-			
-			As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
-			The batch job is divided in Input, Process and On Complete stages.
-			The integration is triggered by SAP Endpoint that receives Account (SAP Customer) as IDoc XML. This XML is passed to the batch.
-			In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
-			Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
+This Anypoint Template should serve as a foundation for setting an online sync of customers from SAP to Salesforce.
+Every time there is a new customer (SFDC account) or a change in already existing one, SAP will send IDoc with it to the running template which will update/create an account in Salesforce target instance.
+
+Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
+
+As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
+The batch job is divided in Input, Process and On Complete stages.
+The integration is triggered by SAP Endpoint that receives Account (SAP Customer) as IDoc XML. This XML is passed to the batch.
+In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 		</section>
 		<section id="considerations">
 <![CDATA[
