@@ -16,8 +16,6 @@
 	<name>template-sap2sfdc-customer-broadcast Anypoint Template Project</name>
 
 	<properties>
-		<sfdc.version>5.4.7</sfdc.version>
-		<sap.transport.version>2.2.2</sap.transport.version>
 		<sap.jco.version>3.0.9</sap.jco.version>
 		<sap.idoc.version>3.0.6</sap.idoc.version>
 		<sap.build.type>mac64</sap.build.type>
@@ -35,7 +33,7 @@
 				</configuration>
 			</plugin>
 
-
+			<!-- SAP Build -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
@@ -90,7 +88,7 @@
 	</build>
 
 	<dependencies>
-
+		<!-- Connectors -->
 		<dependency>
 			<groupId>org.mule.modules</groupId>
 			<artifactId>mule-module-sfdc</artifactId>
@@ -102,7 +100,7 @@
 			<version>${sap.version}</version>
 		</dependency>
 
-
+		<!-- SAP Dependencies -->
 		<dependency>
 			<groupId>com.sap.conn.jco</groupId>
 			<artifactId>sapjco</artifactId>
@@ -121,13 +119,6 @@
 			<artifactId>sapidoc</artifactId>
 			<version>${sap.idoc.version}</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>com.mulesoft.muleesb.modules</groupId>
-			<artifactId>mule-module-batch-ee</artifactId>
-			<version>${mule.version}</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
@@ -148,6 +139,11 @@
 			<id>mule-ee-dependencies</id>
 			<name>Mule EE Dependencies</name>
 			<url>http://repository-master.mulesoft.org/nexus/content/repositories/mule-ee-dependencies/</url>
+		</repository>
+		<repository>
+			<id>mule-ee-releases</id>
+			<name>MuleEE Releases Repository</name>
+			<url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
 		</repository>
 	</repositories>
 	<scm>

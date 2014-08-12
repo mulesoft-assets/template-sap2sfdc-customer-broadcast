@@ -1,5 +1,5 @@
 
-# Anypoint Template: SAP2SFDC-account-broadcast
+# Anypoint Template: SAP2SFDC-customer-broadcast
 
 + [License Agreement](#licenseagreement)
 + [Use Case](#usecase)
@@ -26,16 +26,16 @@ Note that using this template is subject to the conditions of this [License Agre
 Please review the terms of the license before downloading and using this template. In short, you are allowed to use the template for free with Mule ESB Enterprise Edition, CloudHub, or as a trial in Anypoint Studio.
 
 # Use Case <a name="usecase"/>
-This Anypoint Template should serve as a foundation for setting an online sync of accounts from SAP to Salesforce.
-			Everytime there is a new account (SAP customer) or a change in already existing one, the SAP will send IDoc with it to running template which will update account in Salesforce target instance.
-			
-			Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
-			
-			As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
-			The batch job is divided in Input, Process and On Complete stages.
-			The integration is triggered by SAP Endpoint that receives Account (SAP Customer) as IDoc XML. This XML is passed to the batch.
-			In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
-			Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
+This Anypoint Template should serve as a foundation for setting an online sync of customers from SAP to Salesforce.
+Every time there is a new customer (SFDC account) or a change in already existing one, SAP will send IDoc with it to the running template which will update/create an account in Salesforce target instance.
+
+Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
+
+As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
+The batch job is divided in Input, Process and On Complete stages.
+The integration is triggered by SAP Endpoint that receives SAP Customer as IDoc XML. This XML is passed to the batch.
+In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 
 # Considerations <a name="considerations"/>
 
@@ -102,7 +102,7 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
 
-You will need to create a new custom field in your **Product** entity in SFDC with the following name: 
+You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
 + `sap_external_id`
 
@@ -113,7 +113,7 @@ For instructions on how to create a custom field in SFDC plase check this link:
 
 
 # Run it! <a name="runit"/>
-Simple steps to get SAP2SFDC-account-broadcast running.
+Simple steps to get SAP2SFDC-customer-broadcast running.
 
 
 ## Running on premise <a name="runonopremise"/>
@@ -192,12 +192,12 @@ In order to use this Mule Anypoint Template you need to configure properties (Cr
 # API Calls <a name="apicalls"/>
 SalesForce imposes limits on the number of API Calls that can be made.
 Therefore calculating this amount may be an important factor to
-consider. Account Broadcast Template calls to the API can be
+consider. Customer Broadcast Template calls to the API can be
 calculated using the formula:
 
 **X / 200**
 
-Being X the number of Accounts to be synchronized on each run.
+Being X the number of Customers to be synchronized on each run.
 
 The division by 200 is because, by default, Customers are gathered in groups
 of 200 for each Upsert API Call in the commit step. Also consider
