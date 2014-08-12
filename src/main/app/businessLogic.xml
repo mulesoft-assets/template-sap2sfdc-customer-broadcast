@@ -15,8 +15,6 @@ http://www.mulesoft.org/schema/mule/sap http://www.mulesoft.org/schema/mule/sap/
 http://www.mulesoft.org/schema/mule/ee/data-mapper http://www.mulesoft.org/schema/mule/ee/data-mapper/current/mule-data-mapper.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd
 http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd">
-    <data-mapper:config name="SAP_DEBMAS01_XML_to_SFDC_Accounts_1" transformationGraphPath="sap_debmas01_xml_to_sfdc_accounts_1.grf" doc:name="SAP_DEBMAS01_XML_to_SFDC_Accounts_1"/>
-    <data-mapper:config name="SAP_DEBMAS01_XML_to_SFDC_Accounts" transformationGraphPath="sap_debmas01_xml_to_sfdc_accounts.grf" doc:name="SAP_DEBMAS01_XML_to_SFDC_Accounts"/>
     <data-mapper:config name="SAP_DEBMAS01_XML_to_SFDC_Accounts_1SAP_DEBMAS01_XML_to_SFDC_Accounts_2" transformationGraphPath="sap_debmas01_xml_to_sfdc_accounts_2.grf" doc:name="SAP_DEBMAS01_XML_to_SFDC_Accounts_1SAP_DEBMAS01_XML_to_SFDC_Accounts_2"/>
     
     <batch:job name="businessLogicBatch">
