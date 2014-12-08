@@ -45,7 +45,7 @@ public class BusinessLogicTests extends AbstractTemplateFunctionalMunitSuite {
 		spyMessageProcessor("upsert").ofNamespace("sfdc").before(new ProductItemSpayValidator());
 
 		runFlow("callBatchFlow", testEvent(xmlPayload));
-
+		Thread.sleep(5000);
 		verifyCallOfMessageProcessor("upsert").ofNamespace("sfdc").times(1);
 	}
 

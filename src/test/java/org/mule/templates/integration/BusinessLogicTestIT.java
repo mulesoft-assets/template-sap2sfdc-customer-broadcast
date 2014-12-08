@@ -57,7 +57,7 @@ public class BusinessLogicTestIT extends AbstractTemplateTestCase {
 		String xmlPayload = generator.generateXML();
 
 		runFlow("callBatchFlow", xmlPayload);
-
+		Thread.sleep(5000);
 		generator.getUniqueIdList();
 		System.out.println("DONE");
 
