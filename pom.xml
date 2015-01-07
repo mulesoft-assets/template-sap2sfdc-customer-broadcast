@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.mule.templates</groupId>
 		<artifactId>templates-tooling-parent-pom</artifactId>
-		<version>1.0.8</version>
+		<version>1.0.13</version>
 	</parent>
 
 	<artifactId>template-sap2sfdc-customer-broadcast</artifactId>
@@ -134,16 +134,6 @@
 			<name>MuleSoft Snapshots Repository</name>
 			<url>https://repository.mulesoft.org/nexus/content/repositories/snapshots/</url>
 			<layout>default</layout>
-		</repository>
-		<repository>
-			<id>mule-ee-dependencies</id>
-			<name>Mule EE Dependencies</name>
-			<url>http://repository-master.mulesoft.org/nexus/content/repositories/mule-ee-dependencies/</url>
-		</repository>
-		<repository>
-			<id>mule-ee-releases</id>
-			<name>MuleEE Releases Repository</name>
-			<url>https://repository-master.mulesoft.org/nexus/content/repositories/ci-releases/</url>
 		</repository>
 		<repository>
 			<id>mule-ee-thirdparty</id>

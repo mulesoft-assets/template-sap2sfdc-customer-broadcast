@@ -1,5 +1,5 @@
 
-# Anypoint Template: SAP2SFDC-customer-broadcast
+# Anypoint Template: SAP to Salesforce Customer Broadcast
 
 + [License Agreement](#licenseagreement)
 + [Use Case](#usecase)
@@ -27,14 +27,14 @@ Please review the terms of the license before downloading and using this templat
 
 # Use Case <a name="usecase"/>
 This Anypoint Template should serve as a foundation for setting an online sync of customers from SAP to Salesforce.
-Every time there is a new customer (SFDC account) or a change in already existing one, SAP will send IDoc with it to the running template which will update/create an account in Salesforce target instance.
+Every time there is a new Customer (SFDC Account) or a change in an already existing one, SAP will send the IDoc with it to the running template which will update/create an account in the Salesforce target instance.
 
 Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
 
-As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
-The batch job is divided in Input, Process and On Complete stages.
-The integration is triggered by SAP Endpoint that receives SAP Customer as IDoc XML. This XML is passed to the batch.
-In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+As implemented, this Anypoint Template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing). The batch job is divided in Input, Process and On Complete stages.
+
+The integration is triggered by an SAP Endpoint that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
+In the Batch Input stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Commit.
 Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 
 # Considerations <a name="considerations"/>
@@ -60,18 +60,10 @@ There may be a few things that you need to know regarding SAP, in order for this
 
 ### As source of data
 
-In order for this Anypoint Template to work, there are a few things that needs to be done in SAP first.
+SAP backend system is used as source of data. SAP Connector is used to send and receive the data from the SAP backend. 
+The connector can either use RFC calls of BAPI functions and/or IDoc messages for data exchange and needs to be properly customized as per chapter: [Properties to be configured](#propertiestobeconfigured)
 
-1. RFC destination
-RFC destination of type "TCP/IP Connection" pointing to program ID on gateway needs to be created. The destination uses Unicode communication type with target system.
-
-2. Program ID registration
-RFC SDK is used to register program ID on gateway. Same program ID name is used here as in the RFC destination.
-
-3. Partner port
-Partner port needs to be defined type of Idoc of SAP release 4.x as its version. As RFC destination same RFC destination created earlier is used.
-
-
+The Partner profile needs to have a customized type of logical system set as partner type. An outbound parameter of message type DEBMAS should be defined in the partner profile. A RFC destination created earlier should be defined as Receiver Port. Idoc Type base type should be set as DEBMAS01.
 
 ## Salesforce Considerations <a name="salesforceconsiderations"/>
 
@@ -112,12 +104,13 @@ For instructions on how to create a custom field in SFDC plase check this link:
 
 
 
+
 # Run it! <a name="runit"/>
-Simple steps to get SAP2SFDC-customer-broadcast running.
+Simple steps to get SAP to Salesforce Customer Broadcast running.
 
 
 ## Running on premise <a name="runonopremise"/>
-In this section we detail the way you have to run you Anypoint Temple on you computer.
+In this section we detail the way you should run your Anypoint Template on your computer.
 
 
 ### Where to Download Mule Studio and Mule ESB
@@ -152,7 +145,7 @@ Please check this Documentation Page:
 + [Enabling Your Studio Project for SAP](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP)
 
 ### Running on Mule ESB stand alone <a name="runonmuleesbstandalone"/>
-Complete all properties in one of the property files, for example in [mule.prod.properties] (../blob/master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`. 
+Complete all properties in one of the property files, for example in [mule.prod.properties] (../master/src/main/resources/mule.prod.properties) and run your app with the corresponding environment variable to use it. To follow the example, this will be `mule.env=prod`. 
 
 
 ## Running on CloudHub <a name="runoncloudhub"/>
@@ -227,22 +220,18 @@ In the visual editor they can be found on the *Global Element* tab.
 
 
 ## businessLogic.xml<a name="businesslogicxml"/>
-Functional aspect of the Anypoint Template is implemented on this XML, directed by a batch job that will be responsible for creations/updates. The several message processors constitute four high level actions that fully implement the logic of this Anypoint Template:
-
-1. Job execution is invoked from triggerFlow (endpoints.xml) everytime there is a new query executed asking for created/updated Contacts.
-2. During the Process stage, each SFDC User will be filtered depending on, if it has an existing matching user in the SFDC Org B.
-3. The last step of the Process stage will group the users and create/update them in SFDC Org B.
-Finally during the On Complete stage the Anypoint Template will logoutput statistics data into the console.
+A functional aspect of this Anypoint Template implemented in this XML is to create or update objects in the destination system for a represented use case. You can customize and extend the logic of this Anypoint Template in this XML to more specifically meet your needs.
 
 
 
 ## endpoints.xml<a name="endpointsxml"/>
-This is file is conformed by a Flow containing the Poll that will periodically query Sales Force for updated/created Contacts that meet the defined criteria in the query. And then executing the batch job process with the query results.
+This is file is conformed by a Flow containing the endpoints for triggering the template and retrieving the objects that meet the defined criteria in the query. And then executing the batch job process with the query results.
 
 
 
 ## errorHandling.xml<a name="errorhandlingxml"/>
-Contains a [Catch Exception Strategy](http://www.mulesoft.org/documentation/display/current/Catch+Exception+Strategy) that is only Logging the exception thrown (If so). As you imagine, this is the right place to handle how your integration will react depending on the different exceptions.
+This is the right place to handle how your integration will react depending on the different exceptions. 
+This file holds a [Choice Exception Strategy](http://www.mulesoft.org/documentation/display/current/Choice+Exception+Strategy) that is referenced by the main flow in the business logic.
 
 
 

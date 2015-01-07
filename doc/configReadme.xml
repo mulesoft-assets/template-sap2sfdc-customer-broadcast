@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <configuration>
 	<placeholders>
-		<placeholder id="template_name">SAP2SFDC-customer-broadcast</placeholder>
+		<placeholder id="template_name">SAP to Salesforce Customer Broadcast</placeholder>
 	</placeholders>
 	<sections>
 		<section id="use_case">
 This Anypoint Template should serve as a foundation for setting an online sync of customers from SAP to Salesforce.
-Every time there is a new customer (SFDC account) or a change in already existing one, SAP will send IDoc with it to the running template which will update/create an account in Salesforce target instance.
+Every time there is a new Customer (SFDC Account) or a change in an already existing one, SAP will send the IDoc with it to the running template which will update/create an account in the Salesforce target instance.
 
 Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
 
-As implemented, this Anypoint Template leverage the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing).
-The batch job is divided in Input, Process and On Complete stages.
-The integration is triggered by SAP Endpoint that receives SAP Customer as IDoc XML. This XML is passed to the batch.
-In the batch input the SAP Customer is transformed to Salesforce Account and in the only batch step it is upserted to Salesforce in batch commit.
+As implemented, this Anypoint Template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing). The batch job is divided in Input, Process and On Complete stages.
+
+The integration is triggered by an SAP Endpoint that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
+In the Batch Input stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Commit.
 Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 		</section>
 		<section id="considerations">
@@ -31,6 +31,11 @@ This Anypoint template uses a few private Maven dependencies in oder to work. If
 You will find that there are three dependencies in the pom.xml file that begin with the following group id: 
 	**com.sap.conn.jco** 
 These dependencies are private for Mulesoft and will cause you application not to build from a Maven command line. You need to replace them with "provided" scope and copy the libraries into the build path.
+]]>
+		</section>
+		<section id="sap_src">
+<![CDATA[
+The Partner profile needs to have a customized type of logical system set as partner type. An outbound parameter of message type DEBMAS should be defined in the partner profile. A RFC destination created earlier should be defined as Receiver Port. Idoc Type base type should be set as DEBMAS01.
 ]]>
 		</section>
 		<section id="sfdc_dst">
