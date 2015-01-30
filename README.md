@@ -100,7 +100,7 @@ You will need to create a new custom field in your **Account** entity in SFDC wi
 
 For instructions on how to create a custom field in SFDC plase check this link:
 
-+ [Create Custom Fields](http://www.salesforce.com/smallbusinesscenter/faq/customize.jsp#customfield)
++ [Create Custom Fields](https://help.salesforce.com/HTViewHelpDoc?id=adding_fields.htm)
 
 
 
