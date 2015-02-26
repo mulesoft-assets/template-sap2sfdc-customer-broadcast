@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='utf-8'?>
 <configuration>
 	<placeholders>
 		<placeholder id="template_name">SAP to Salesforce Customer Broadcast</placeholder>
@@ -17,7 +17,7 @@ In the Batch Input stage the SAP Customer is transformed to a Salesforce Account
 Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 		</section>
 		<section id="considerations">
-<![CDATA[
+
 To make this Anypoint Template run, there are certain preconditions that must be considered. All of them deal with the preparations in both source (SAP) and destination (SFDC) systems, that must be made in order for all to run smoothly. 
 **Failling to do so could lead to unexpected behavior of the template.**
 
@@ -31,15 +31,15 @@ This Anypoint template uses a few private Maven dependencies in oder to work. If
 You will find that there are three dependencies in the pom.xml file that begin with the following group id: 
 	**com.sap.conn.jco** 
 These dependencies are private for Mulesoft and will cause you application not to build from a Maven command line. You need to replace them with "provided" scope and copy the libraries into the build path.
-]]>
+
 		</section>
 		<section id="sap_src">
-<![CDATA[
+
 The Partner profile needs to have a customized type of logical system set as partner type. An outbound parameter of message type DEBMAS should be defined in the partner profile. A RFC destination created earlier should be defined as Receiver Port. Idoc Type base type should be set as DEBMAS01.
-]]>
+
 		</section>
 		<section id="sfdc_dst">
-		<![CDATA[
+		
 This template makes use of the `External ID` field offered by Salesforce. Here is a short description on how SFDC define external ID's 
 
 + [What is an external ID?](http://help.salesforce.com/apex/HTViewHelpDoc?id=faq_import_general_what_is_an_external.htm)
@@ -53,18 +53,18 @@ You will need to create a new custom field in your **Account** entity in SFDC wi
 For instructions on how to create a custom field in SFDC plase check this link:
 
 + [Create Custom Fields](https://help.salesforce.com/HTViewHelpDoc?id=adding_fields.htm)
-]]>
+
 		</section>
 		<section id="running_on_studio">
-		<![CDATA[
+		
 In order to make this Anypoint Template run on Mule Studio there are a few extra steps that needs to be made.
 Please check this Documentation Page:
 
 + [Enabling Your Studio Project for SAP](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP)
-		]]>
+		
 		</section>
 		<section id="application_configuration">
-		<![CDATA[
+		
 **SAP Connector configuration**
 
 + sap.jco.ashost=your.sap.address.com
@@ -86,11 +86,11 @@ Please check this Documentation Page:
 + sfdc.username=bob.dylan@sfdc
 + sfdc.password=DylanPassword123
 + sfdc.securityToken=avsfwCUl7apQs56Xq2AKi3X
-+ sfdc.url=https://test.salesforce.com/services/Soap/u/28.0
-]]>
++ sfdc.url=https://test.salesforce.com/services/Soap/u/32.0
+
 		</section>
 		<section id="api_calls">
-		<![CDATA[
+		
 SalesForce imposes limits on the number of API Calls that can be made.
 Therefore calculating this amount may be an important factor to
 consider. Customer Broadcast Template calls to the API can be
@@ -106,7 +106,7 @@ that this calls are executed repeatedly every polling cycle.
 
 For instance if 10 records are fetched from origin instance, then 1 api
 calls to SFDC will be made ( 1).
-]]>
+
 		</section>
 	</sections>
 </configuration>
