@@ -85,11 +85,11 @@ public class SapPayloadGenerator {
 		}
 	}
 
-	public void setTempalteName(String templateName) {
+	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
 
-	public String getTemlateName() {
+	public String getTemplateName() {
 		if (StringUtils.isEmpty(templateName)) {
 			return DEFAULT_TEMPLATE_NAME;
 		}
@@ -116,7 +116,7 @@ public class SapPayloadGenerator {
 	}
 
 	private void makeIdsUnique(NodeList nodeList) throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
-		String waterMark = "_" + getTemlateName() + System.currentTimeMillis();
+		String waterMark = "_" + getTemplateName() + System.currentTimeMillis();
 
 		int index = 0;
 		while (index < nodeList.getLength()) {

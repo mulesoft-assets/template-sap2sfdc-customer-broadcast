@@ -40,7 +40,7 @@ Finally during the On Complete stage the Anypoint Template will log output stati
 # Considerations <a name="considerations"/>
 
 To make this Anypoint Template run, there are certain preconditions that must be considered. All of them deal with the preparations in both source (SAP) and destination (SFDC) systems, that must be made in order for all to run smoothly. 
-**Failling to do so could lead to unexpected behavior of the template.**
+**Failing to do so could lead to unexpected behavior of the template.**
 
 Before continue with the use of this Anypoint Template, you may want to check out this [Documentation Page](http://www.mulesoft.org/documentation/display/current/SAP+Connector#SAPConnector-EnablingYourStudioProjectforSAP), that will teach you how to work 
 with SAP and Anypoint Studio.
@@ -51,7 +51,7 @@ This Anypoint template uses a few private Maven dependencies in oder to work. If
 
 You will find that there are three dependencies in the pom.xml file that begin with the following group id: 
 	**com.sap.conn.jco** 
-These dependencies are private for Mulesoft and will cause you application not to build from a Maven command line. You need to replace them with "provided" scope and copy the libraries into the build path.
+These dependencies are private for Mulesoft and will cause your application not to build from a Maven command line. You need to replace them with "provided" scope and copy the libraries into the build path.
 
 
 ## SAP Considerations <a name="sapconsiderations"/>
@@ -92,15 +92,19 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 + [What is an external ID?](http://help.salesforce.com/apex/HTViewHelpDoc?id=faq_import_general_what_is_an_external.htm)
 
-The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afteward for the template to reference it.
+The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used aftewards for the template to reference it.
 
 You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
 + `sap_external_id`
 
-For instructions on how to create a custom field in SFDC plase check this link:
+For instructions on how to create a custom field in SFDC please check this link:
 
 + [Create Custom Fields](https://help.salesforce.com/HTViewHelpDoc?id=adding_fields.htm)
+
+
+
+
 
 
 
@@ -197,7 +201,7 @@ of 200 for each Upsert API Call in the commit step. Also consider
 that this calls are executed repeatedly every polling cycle.
 
 For instance if 10 records are fetched from origin instance, then 1 api
-calls to SFDC will be made ( 1).
+calls to SFDC will be made (1).
 
 
 # Customize It!<a name="customizeit"/>
