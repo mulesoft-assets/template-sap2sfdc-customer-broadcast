@@ -28,6 +28,8 @@ import javax.xml.xpath.XPathFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -36,6 +38,7 @@ import org.xml.sax.SAXException;
 public class SapPayloadGenerator {
 	private static final String DEFAULT_TEMPLATE_NAME = "SAP_TEMPLATE";
 	private static final String MATERIAL_ID_XPATH = "/DEBMAS01/IDOC/E1KNA1M/KUNNR";
+	private static final Logger log = LogManager.getLogger(SapPayloadGenerator.class);
 
 	private XPath xpath;
 	private Document doc;
@@ -46,8 +49,8 @@ public class SapPayloadGenerator {
 	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException, XPathExpressionException {
 		String xml = loadFile("./src/test/resources/debmas01.xml");
 		SapPayloadGenerator generator = new SapPayloadGenerator(xml);
-		System.out.println(generator.generateXML());
-		System.out.println(generator.getUniqueIdList());
+		log.info(generator.generateXML());
+		log.info(generator.getUniqueIdList());
 	}
 
 	private static String loadFile(String filePath) throws IOException {
