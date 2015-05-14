@@ -23,7 +23,7 @@ Here you should:
 Here you should not:
 	* Run validations against external systems
 	* Choose flow of your application based on input parameters">
-		<sap:inbound-endpoint type="idoc" rfcType="qrfc" xmlVersion="2" responseTimeout="10000" doc:name="SAP" jcoConnectionCount="${sap.jco.connectioncount}" jcoGwHost="${sap.jco.gwhost}" jcoGwService="${sap.jco.gwservice}" jcoProgramId="${sap.jco.idoc.programid}" outputXml="true" connector-ref="SAP" functionName="DEBMAS01">
+		<sap:inbound-endpoint type="idoc" rfcType="qrfc" xmlVersion="2" responseTimeout="10000" doc:name="SAP IDoc Listener" jcoConnectionCount="${sap.jco.connectioncount}" jcoGwHost="${sap.jco.gwhost}" jcoGwService="${sap.jco.gwservice}" jcoProgramId="${sap.jco.idoc.programid}" outputXml="true" connector-ref="SAP" functionName="DEBMAS01">
 	    	<sap:default-in-memory-tid-store/>
 		</sap:inbound-endpoint>
 		
