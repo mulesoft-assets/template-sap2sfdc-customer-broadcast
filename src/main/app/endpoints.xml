@@ -6,7 +6,7 @@
     xmlns="http://www.mulesoft.org/schema/mule/core"
     xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
     xmlns:spring="http://www.springframework.org/schema/beans"
-    version="EE-3.6.2"
+    version="EE-3.7.1"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
@@ -26,7 +26,7 @@ Here you should not:
 		<sap:inbound-endpoint type="idoc" rfcType="qrfc" xmlVersion="2" responseTimeout="10000" doc:name="SAP IDoc Listener" jcoConnectionCount="${sap.jco.connectioncount}" jcoGwHost="${sap.jco.gwhost}" jcoGwService="${sap.jco.gwservice}" jcoProgramId="${sap.jco.idoc.programid}" outputXml="true" connector-ref="SAP" functionName="DEBMAS01">
 	    	<sap:default-in-memory-tid-store/>
 		</sap:inbound-endpoint>
-		
-		<batch:execute name="businessLogicBatch" doc:name="trigger businessLogicBatch"/>      
+        <flow-ref name="mainFlow" doc:name="Call mainFlow"/>
+      
     </flow>
 </mule>

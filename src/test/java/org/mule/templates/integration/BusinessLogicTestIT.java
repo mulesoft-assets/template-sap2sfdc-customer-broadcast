@@ -6,6 +6,7 @@
 
 package org.mule.templates.integration;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,9 +22,12 @@ import org.mule.MessageExchangePattern;
 import org.mule.api.MuleEvent;
 import org.mule.api.MuleException;
 import org.mule.api.lifecycle.InitialisationException;
+import org.mule.construct.Flow;
 import org.mule.processor.chain.SubflowInterceptingChainLifecycleWrapper;
+import org.mule.transformer.types.DataTypeFactory;
 import org.mule.transport.NullPayload;
 
+import com.mulesoft.module.batch.BatchTestHelper;
 import com.mulesoft.module.batch.api.BatchManager;
 
 /**
@@ -34,17 +38,24 @@ import com.mulesoft.module.batch.api.BatchManager;
 public class BusinessLogicTestIT extends AbstractTemplateTestCase {
 	private static final Logger log = LogManager.getLogger(BusinessLogicTestIT.class);
 	private static final String TEST_CUSTOMER_MASTER_FILE = "./src/test/resources/debmas01.xml";
+	private static final int TIMEOUT_SEC = 120;
 
 	private SubflowInterceptingChainLifecycleWrapper retrieveAccountFromSFDCFlow;
 
+	private BatchTestHelper helper;
 	private List<Map<String, Object>> accountsToDeleteFromSFDC = new ArrayList<Map<String, Object>>();
+	private Flow mainFlow;
 
 	@Before
 	public void setUp() throws Exception {
 		muleContext.getRegistry().lookupObject(BatchManager.class).cancelAllRunningInstances();
 
+		helper = new BatchTestHelper(muleContext);
+		
 		retrieveAccountFromSFDCFlow = getSubFlow("retrieveAccountFromSFDCFlow");
 		retrieveAccountFromSFDCFlow.initialise();
+		
+		mainFlow =  (Flow) muleContext.getRegistry().lookupObject("mainFlow");
 	}
 
 	@After
@@ -59,9 +70,14 @@ public class BusinessLogicTestIT extends AbstractTemplateTestCase {
 		generator.setTemplateName(TEMPLATE_NAME);
 		String xmlPayload = generator.generateXML();
 
-		runFlow("callBatchFlow", xmlPayload);
-		Thread.sleep(5000);
-		generator.getUniqueIdList();
+		final MuleEvent testEvent = getTestEvent(null, mainFlow);
+		testEvent.getMessage().setPayload(xmlPayload, DataTypeFactory.create(InputStream.class, "application/xml"));
+		
+		mainFlow.process(testEvent);
+		
+		helper.awaitJobTermination(TIMEOUT_SEC * 1000, 500);
+		helper.assertJobWasSuccessful();
+		
 		log.info("DONE");
 
 		for (String id : generator.getUniqueIdList()) {

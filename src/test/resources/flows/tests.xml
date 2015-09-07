@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
+<mule xmlns:metadata="http://www.mulesoft.org/schema/mule/metadata" xmlns:sfdc="http://www.mulesoft.org/schema/mule/sfdc" 
 xmlns:core="http://www.mulesoft.org/schema/mule/core" 
-xmlns:synchronize="http://www.mulesoft.org/schema/mule/synchronize" 
 xmlns:batch="http://www.mulesoft.org/schema/mule/batch" 
 xmlns:tracking="http://www.mulesoft.org/schema/mule/ee/tracking" 
 xmlns="http://www.mulesoft.org/schema/mule/core" 
 xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" 
 xmlns:spring="http://www.springframework.org/schema/beans" 
-version="EE-3.6.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+version="EE-3.7.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
 http://www.mulesoft.org/schema/mule/ee/tracking http://www.mulesoft.org/schema/mule/ee/tracking/current/mule-tracking-ee.xsd
 http://www.mulesoft.org/schema/mule/batch http://www.mulesoft.org/schema/mule/batch/current/mule-batch.xsd
-http://www.mulesoft.org/schema/mule/synchronize http://www.mulesoft.org/schema/mule/synchronize/current/mule-synchronize.xsd
 http://www.mulesoft.org/schema/mule/sfdc http://www.mulesoft.org/schema/mule/sfdc/current/mule-sfdc.xsd">
-    <flow name="callBatchFlow" doc:name="callBatchFlow">
-        <logger level="ERROR" message="++++++ BEFORE CALL BATCH" doc:name="Logger"></logger>
-        <batch:execute name="businessLogicBatch" doc:name="Batch Execute"/>
-
-        <logger level="ERROR" message="++++++ AFTER CALL BATCH" doc:name="Logger"></logger>
-    </flow>
      
-    <sub-flow name="retrieveAccountFromSFDCFlow" doc:name="retrieveAccountFromSFDCFlow">
+    <sub-flow name="retrieveAccountFromSFDCFlow" >
         <sfdc:query-single config-ref="Salesforce" query="SELECT Id FROM Account  WHERE sap_external_id__c = '#[payload['sap_external_id__c']]'" doc:name="Salesforce"/>
         <logger level="INFO" message="Retrieve Contacts result: #[payload]" doc:name="Logger"/>
     </sub-flow>
-    <sub-flow name="deleteAccountsFromSFDCFlow" doc:name="deleteAccountsFromSFDCFlow">
+    <sub-flow name="deleteAccountsFromSFDCFlow" >
         <sfdc:delete config-ref="Salesforce" doc:name="Salesforce">
             <sfdc:ids ref="#[payload]"/>
         </sfdc:delete>
