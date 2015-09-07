@@ -36,7 +36,7 @@ import com.mulesoft.module.batch.api.BatchManager;
  * 
  */
 public class BusinessLogicTestIT extends AbstractTemplateTestCase {
-	private static final Logger log = LogManager.getLogger(BusinessLogicTestIT.class);
+	private static final Logger LOGGER = LogManager.getLogger(BusinessLogicTestIT.class);
 	private static final String TEST_CUSTOMER_MASTER_FILE = "./src/test/resources/debmas01.xml";
 	private static final int TIMEOUT_SEC = 120;
 
@@ -78,7 +78,7 @@ public class BusinessLogicTestIT extends AbstractTemplateTestCase {
 		helper.awaitJobTermination(TIMEOUT_SEC * 1000, 500);
 		helper.assertJobWasSuccessful();
 		
-		log.info("DONE");
+		LOGGER.info("DONE");
 
 		for (String id : generator.getUniqueIdList()) {
 			Map<String, Object> payload = new HashMap<String, Object>();
