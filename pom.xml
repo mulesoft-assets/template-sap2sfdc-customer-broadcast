@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.mule.templates</groupId>
 		<artifactId>templates-tooling-parent-pom</artifactId>
-		<version>1.2.3</version>
+		<version>1.2.8</version>
 	</parent>
 
 	<artifactId>template-sap2sfdc-customer-broadcast</artifactId>
@@ -17,6 +17,7 @@
 	<properties>
 		<sap.jco.version>3.0.13</sap.jco.version>
 		<sap.idoc.version>3.0.12</sap.idoc.version>
+		<munit.utils.version>1.0.0</munit.utils.version>
 	</properties>
 	<build>
 		<plugins>
@@ -91,6 +92,30 @@
 			<version>${mule.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>mule-munit-support</artifactId>
+            <version>${mule.munit.support.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit</groupId>
+            <artifactId>munit-runner</artifactId>
+            <version>${munit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit.utils</groupId>
+            <artifactId>munit-dbserver-module</artifactId>
+            <version>${munit.utils.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.mulesoft.munit.utils</groupId>
+            <artifactId>munit-synchronize-module</artifactId>
+            <version>${munit.utils.version}</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 	<repositories>
 		<repository>
