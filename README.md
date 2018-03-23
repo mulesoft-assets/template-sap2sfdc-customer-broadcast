@@ -34,7 +34,7 @@ Requirements have been set not only to be used as examples, but also to establis
 As implemented, this Anypoint Template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing). The batch job is divided in Process and On Complete stages.
 
 The integration is triggered by an SAP Endpoint that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
-In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Commit.
+In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
 Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 
 # Considerations <a name="considerations"/>
@@ -196,7 +196,7 @@ calculated using the formula:
 Being X the number of Customers to be synchronized on each run.
 
 The division by ${page.size} is because, by default, Customers are gathered in groups
-of ${page.size} for each Upsert API Call in the commit step. Also consider
+of ${page.size} for each Upsert API Call in the aggregation step. Also consider
 that this calls are executed repeatedly every polling cycle.
 
 For instance if 10 records are fetched from origin instance, then 1 api
@@ -224,8 +224,8 @@ In the visual editor they can be found on the *Global Element* tab.
 
 ## businessLogic.xml<a name="businesslogicxml"/>
 Functional aspect of the Anypoint Template is implemented on this XML, directed by a batch job that will be responsible for creations/updates. The several message processors constitute three high level actions that fully implement the logic of this Anypoint Template:
-1. The integration is triggered by an SAP Endpoint that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
-2. In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Commit.
+1. The integration is triggered by a Document Source that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
+2. In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
 3. Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
 
 
