@@ -31,11 +31,11 @@ Every time there is a new Customer (SFDC Account) or a change in an already exis
 
 Requirements have been set not only to be used as examples, but also to establish a starting point to adapt your integration to your requirements.
 
-As implemented, this Anypoint Template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing). The batch job is divided in Process and On Complete stages.
+As implemented, this Anypoint Template leverages the [Batch Module](http://www.mulesoft.org/documentation/display/current/Batch+Processing). The batch job is divided in *Process* and *On Complete* stages.
 
 The integration is triggered by an SAP Endpoint that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
-In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
-Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
+In the *Process* stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
+Finally during the *On Complete* stage the Anypoint Template will log output statistics data into the console.
 
 # Considerations <a name="considerations"/>
 
@@ -88,7 +88,7 @@ This template makes use of the `External ID` field offered by Salesforce. Here i
 
 + [What is an external ID?](http://help.salesforce.com/apex/HTViewHelpDoc?id=faq_import_general_what_is_an_external.htm)
 
-The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used aftewards for the template to reference it.
+The templates uses the External ID in order to do xRef between the entities in both systems. The idea is, once an entity is created in SFDC it's decorated with an ID from the source system which will be used afterwards for the template to reference it.
 
 You will need to create a new custom field in your **Account** entity in SFDC with the following name: 
 
@@ -124,10 +124,8 @@ First thing to know if you are a newcomer to Mule is where to get the tools.
 ### Importing an Anypoint Template into Studio
 Mule Studio offers several ways to import a project into the workspace, for instance: 
 
-+ Anypoint Studio generated Deployable Archive (.zip)
-+ Anypoint Studio Project from External Location
-+ Maven-based Mule Project from pom.xml
-+ Mule ESB Configuration XML from External Location
++ Anypoint Studio Project from File System
++ Packaged mule application (.jar)
 
 You can find a detailed description on how to do so in this [Documentation Page](http://www.mulesoft.org/documentation/display/current/Importing+and+Exporting+in+Studio).
 
@@ -225,8 +223,8 @@ In the visual editor they can be found on the *Global Element* tab.
 ## businessLogic.xml<a name="businesslogicxml"/>
 Functional aspect of the Anypoint Template is implemented on this XML, directed by a batch job that will be responsible for creations/updates. The several message processors constitute three high level actions that fully implement the logic of this Anypoint Template:
 1. The integration is triggered by a Document Source that receives a SAP Customer as IDoc XML. This XML is passed to the batch process.
-2. In the Process stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
-3. Finally during the On Complete stage the Anypoint Template will log output statistics data into the console.
+2. In the *Process* stage the SAP Customer is transformed to a Salesforce Account and then upserted to Salesforce in the Batch Step using a Batch Aggregator.
+3. Finally during the *On Complete* stage the Anypoint Template will log output statistics data into the console.
 
 
 
