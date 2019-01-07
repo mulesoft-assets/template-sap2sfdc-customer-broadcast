@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce" xmlns:scripting="http://www.mulesoft.org/schema/mule/scripting"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+    xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+    xsi:schemaLocation="
+        http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+        http://www.mulesoft.org/schema/mule/scripting http://www.mulesoft.org/schema/mule/scripting/current/mule-scripting.xsd 
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd
+        http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd">
+
+    <munit:config name="test-suite.xml" />
+
+    <configuration-properties doc:name="Configuration properties" doc:id="e0528da1-9369-45d7-80e4-eef7dac527b4" file="mule.test.properties" />
+    <configuration-properties doc:name="Configuration properties" doc:id="19be7514-eb52-4cd0-a13b-13476b89dfc8" file="common.properties" />
+
+    <munit:before-test name="test-suite-Before_Test" description="Before tests actions" doc:id="4c32c3f1-123a-4f73-bf21-14be509f3dba">
+        <set-variable value="#[MunitTools::getResourceAsString('idoc.xml')]" doc:name="Set iDoc message to variable" doc:id="d3be1eb9-5523-41cb-b0e6-a55b5e7c5ce5"
+            variableName="iDoc" mimeType="application/xml" />
+    </munit:before-test>
+    <munit:test name="test-suite-Test" description="MUnit Test" doc:id="5825e635-96f0-418c-bed1-805c3e480e14">
+        <munit:execution>
+            <set-payload value="#[vars.iDoc]" doc:name="Set IDoc message to Payload" doc:id="25db7909-7bd2-4cf5-8848-4afc9f1179d4"
+                mimeType="application/xml" />
+            <flow-ref doc:name="Call businessLogicFlow" doc:id="a2c84069-dc46-4edc-a493-cf58ab15f462" name="businessLogicFlow" />
+            <scripting:execute engine="groovy" doc:name="Sleep for 30s until the processing is completed" doc:id="1453dda4-5784-41d0-ba6e-bd07aeea9b17">
+                <scripting:code>sleep(30000)</scripting:code>
+            </scripting:execute>
+            <salesforce:query-single doc:name="Query record should be created in Salesforce" doc:id="c9e0704b-203c-4c6a-b846-af2294584f81"
+                config-ref="Salesforce" target="resultCreated">
+                <salesforce:salesforce-query>SELECT Id FROM Account WHERE Name = ':name'</salesforce:salesforce-query>
+                <salesforce:parameters><![CDATA[#[output application/java
+---
+{
+	"name" : vars.iDoc.DEBMAS01.IDOC.E1KNA1M.NAME1
+}]]]></salesforce:parameters>
+            </salesforce:query-single>
+        </munit:execution>
+        <munit:validation>
+            <munit-tools:assert-that doc:name="Assert that record was added to Salesforce" doc:id="985eb58a-2509-4e03-b63b-98f3e82b32d8"
+                expression="#[vars.resultCreated.Id]" is="#[MunitTools::notNullValue()]" message="Record wasn't added to Salesforce" />
+            <munit-tools:verify-call doc:name="Verify salesforce:upsert call" doc:id="16d72280-5688-4cd1-b4cb-0e88ec2c318b"
+                processor="salesforce:upsert" times="1" />
+        </munit:validation>
+    </munit:test>
+    <munit:after-test name="test-suite-After_Test" description="After tests actions" doc:id="9f515248-08cd-46d7-858c-ee1f9eb2844f">
+        <salesforce:delete doc:name="Delete test data from Salesforce" doc:id="a13bd00c-0b46-4919-a84c-ec8e0b0274b4" config-ref="Salesforce">
+            <salesforce:delete-ids><![CDATA[#[[vars.resultCreated.Id]]]]></salesforce:delete-ids>
+        </salesforce:delete>
+    </munit:after-test>
+</mule>

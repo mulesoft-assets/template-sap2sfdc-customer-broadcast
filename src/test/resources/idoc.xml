@@ -1,0 +1,16 @@
+<?xml version="1.1"?>
+<DEBMAS01>
+    <IDOC BEGIN="1">
+        <E1KNA1M SEGMENT="1">
+            <KUNNR>0000000001</KUNNR>
+            <LAND1>US</LAND1>
+            <NAME1>Test Store</NAME1>
+            <ORT01>City</ORT01>
+            <PSTLZ>00000</PSTLZ>
+            <REGIO>State</REGIO>
+            <STRAS>Street</STRAS>
+            <TELF1>000-000-0001</TELF1>
+            <TELFX>000-000-0002</TELFX>
+        </E1KNA1M>
+    </IDOC>
+</DEBMAS01>
